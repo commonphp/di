@@ -1,7 +1,7 @@
 {
   "name": "comphp/di",
   "type": "library",
-  "description": "CommonPHP DependencyInjection is a simple, robust dependency injection container for PHP applications. It facilitates the dynamic creation of objects, invocation of methods, function calling, and property population. The library supports automatic parameter resolution, circular dependencies detection, customizable parameter lookup, and offers detailed exception handling for troubleshooting.",
+  "description": "CommonPHP DependencyInjection is a simple, robust dependency injection container for PHP applications. It facilitates the dynamic creation of objects, invocation of methods, function calling, and property population. ",
   "license": "MIT",
   "authors": [
     {
