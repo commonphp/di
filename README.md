@@ -1,8 +1,6 @@
 # CommonPHP Dependency Injection
 
-`CommonPHP\DependencyInjection` is a simple yet powerful dependency injection (DI) container for PHP applications, enabling the means to dynamically create new objects, invoke methods, call functions and populate properties without having to know the structure of the target directly. 
-
-enabling automatic instantiation and wiring of your classes. It is part of the CommonPHP project, which offers various components to ease PHP development.
+`CommonPHP\DependencyInjection` is a simple yet powerful dependency injection (DI) container for PHP applications, enabling the means to dynamically create new objects, invoke methods, call functions and populate properties without having to know the structure of the target directly.
 
 ## Features
 
