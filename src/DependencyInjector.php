@@ -50,9 +50,10 @@ final class DependencyInjector
     }
 
     /**
-     * @param class-string $className The fully qualified class name to instantiate
+     * @template T
+     * @param class-string<T> $className The fully qualified class name to instantiate
      * @param array $parameters The parameters to pass to the constructor
-     * @return object The instantiated object.
+     * @return T The instantiated object.
      * @throws ClassNotDefinedException
      * @throws ClassNotInstantiableException
      * @throws ParameterDiscoveryFailedException
