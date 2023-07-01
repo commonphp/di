@@ -1,7 +1,7 @@
 {
   "name": "comphp/di",
   "type": "library",
-  "version": "0.0.1",
+  "version": "0.1",
   "license": "MIT",
   "authors": [
     {
@@ -16,7 +16,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Test\\CommonPHP\\DependencyInjection\\": "tests/"
+      "CommonPHP\\Tests\\": "tests/"
     }
   },
   "require": {
