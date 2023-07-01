@@ -31,7 +31,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run tests
-        run: ./vendor/bin/phpunit
+        run: ./vendor/bin/phpunit tests
 
     # If you have a deployment step, you can include it here.
     # This could be pushing to a Docker registry, deploying to a cloud platform, etc.
