@@ -11,10 +11,11 @@ function exampleFunction(string $message)
 
 $injector = new DependencyInjector();
 
+// Call the function 'exampleFunction' with 'Hello, world!' as the parameter
 try {
-    // Call the function 'exampleFunction' with 'Hello, world!' as the parameter
     $injector->call('exampleFunction', ['message' => 'Hello, world!']);
-} catch (Exception $e) {
-    // Handle exceptions
-    echo "An error occurred: " . $e->getMessage();
+} catch (CommonPHP\DependencyInjection\Exceptions\CallFailedException $e) {
+    // This exception is thrown when an invocation of a method or function fails.
+    // Proper error message should be returned or logged, and the error should be handled appropriately.
+    die($e);
 }
