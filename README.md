@@ -20,7 +20,7 @@ The CommonPHP framework requires PHP 8.1 or newer. This library specifically has
 
 ## Installation
 
-You can install `CommonPHP\DependencyInjection` using Composer:
+You can install `CommonPHP\DependencyInjection` using [Composer](https://getcomposer.org/):
 
 ```bash
 composer require comphp/di
