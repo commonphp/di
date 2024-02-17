@@ -13,7 +13,7 @@
 
 ## Requirements
 
-The CommonPHP framework requires PHP 8.1 or newer. This library specifically has the following dependencies:
+The CommonPHP framework requires PHP 8.3 or newer. This library specifically has the following dependencies:
 
 - PHP's built-in Reflection classes, which are used extensively for instantiating classes, invoking methods, and reading type information.
 
