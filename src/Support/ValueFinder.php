@@ -131,7 +131,7 @@ final class ValueFinder
             $found = false;
 
             // Try to find the value
-            $result[] = $this->findValue($parameter->getName(), $parameter->getType(), $passedParameters, $found);
+            $newValue = $this->findValue($parameter->getName(), $parameter->getType(), $passedParameters, $found);
 
             if (!$found) {
 
@@ -147,6 +147,10 @@ final class ValueFinder
                     $source->getName(),
                     $parameter->getName()
                 );
+            }
+            else
+            {
+                $result[] = $newValue;
             }
         }
 
