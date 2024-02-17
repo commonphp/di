@@ -25,6 +25,7 @@ use CommonPHP\DependencyInjection\Exceptions\MethodIsStaticException;
 use CommonPHP\DependencyInjection\Exceptions\MethodNotDefinedException;
 use CommonPHP\DependencyInjection\Exceptions\MethodNotPublicException;
 use CommonPHP\DependencyInjection\Exceptions\ParameterDiscoveryFailedException;
+use CommonPHP\DependencyInjection\Exceptions\ParameterTypeRequiredException;
 use CommonPHP\DependencyInjection\Exceptions\UnsupportedReflectionTypeException;
 use CommonPHP\DependencyInjection\Support\ValueFinder;
 use CommonPHP\DependencyInjection\Support\InstantiationStack;
@@ -51,6 +52,32 @@ final class DependencyInjector
     }
 
     /**
+     * Assigns a custom callback for instantiating a specified class.
+     *
+     * Enables defining a custom instantiation logic for a specific class through a callback,
+     * thereby overriding the default instantiation mechanism. This feature is particularly useful
+     * for setting up complex objects or integrating classes requiring specific construction patterns,
+     * enhancing flexibility in object creation within the dependency injection system.
+     *
+     * @param string   $className The fully qualified name of the class for custom instantiation.
+     * @param callable $callback  A user-defined function that instantiates the class. The callback
+     *                            is provided with the DependencyInjector instance, class name,
+     *                            and type name, facilitating context-aware instantiation.
+     * @return void
+     */
+    public function delegate(string $className, callable $callback): void
+    {
+        $this->valueFinder->onLookup(function ($name, $typeName, &$found) use ($className, $callback) {
+            var_dump($typeName, $className);
+            if ($typeName === $className) {
+                $found = true;
+                return $callback($this, $name, $typeName);
+            }
+            return null;
+        });
+    }
+
+    /**
      * Instantiates a class with the given parameters, resolving dependencies automatically.
      *
      * @template T
@@ -63,6 +90,7 @@ final class DependencyInjector
      * @throws UnsupportedReflectionTypeException
      * @throws InstantiateCircularReferenceException
      * @throws InstantiationFailedException
+     * @throws ParameterTypeRequiredException
      */
     public function instantiate(string $className, array $parameters): object
     {

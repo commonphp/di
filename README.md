@@ -98,6 +98,37 @@ $injector->valueFinder->onLookup(function (string $name, string $typeName, bool 
 });
 ```
 
+### Delegating Class Instantiation
+
+For classes requiring specific instantiation logic, the `DependencyInjector` offers a `delegate` method. This method allows you to specify a custom callback for creating instances of a specific class, providing greater control over the object creation process.
+
+```php
+<?php
+
+require_once 'vendor/autoload.php';
+
+use CommonPHP\DependencyInjection\DependencyInjector;
+
+class SpecificClass {
+    private string $customArg1;
+    private string $customArg2;
+
+    public function __construct(string $customArg1, string $customArg2) {
+        // Custom construction logic here
+    }
+}
+
+$injector = new DependencyInjector();
+
+// Delegate instantiation of SpecificClass to a custom callback
+$injector->delegate(SpecificClass::class, function($injector, $name, $typeName) {
+    return new SpecificClass('value1', 'value2');
+});
+
+// Automatically use the delegate when SpecificClass is needed
+$instance = $injector->instantiate(InitiatedClass::class);
+```
+
 ## Documentation
 
 For more in-depth documentation, check out [the Wiki](https://github.com/commonphp/di/wiki).
