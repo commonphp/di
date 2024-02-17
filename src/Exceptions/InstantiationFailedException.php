@@ -1,24 +1,28 @@
 <?php
 
+/**
+ * Represents an exception thrown when a class cannot be instantiated as required.
+ *
+ * This exception signals a failure in the instantiation process of a class, indicating an inability to create an
+ * instance due to various potential issues.
+ *
+ * @package CommonPHP
+ * @subpackage DependencyInjection\Exceptions
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
+ */
+
 namespace CommonPHP\DependencyInjection\Exceptions;
 
-use Exception;
 use Throwable;
 
-/**
- * Exception thrown when the instantiation of a class fails.
- */
-class InstantiationFailedException extends Exception
+class InstantiationFailedException extends DependencyInjectionException
 {
-    /**
-     * InstantiationFailedException constructor.
-     *
-     * @param string         $class     The class that failed to be instantiated.
-     * @param int            $code      The error code (default: 0).
-     * @param Throwable|null $previous  The previous throwable used for chaining exceptions (default: null).
-     */
-    public function __construct(string $class, int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $class, ?Throwable $previous = null)
     {
-        parent::__construct("Failed to instantiate the class $class.", $code, $previous);
+        parent::__construct("Failed to instantiate the class $class.", $previous);
+        $this->code = 1505;
     }
 }

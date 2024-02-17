@@ -1,25 +1,28 @@
 <?php
 
+/**
+ * Represents an exception thrown due to a circular reference detected during instantiation.
+ *
+ * This exception indicates a circular dependency within the instantiation process, which prevents successful
+ * dependency injection due to the recursion loop.
+ *
+ * @package CommonPHP
+ * @subpackage DependencyInjection\Exceptions
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
+ */
+
 namespace CommonPHP\DependencyInjection\Exceptions;
 
-use Exception;
 use Throwable;
 
-/**
- * Exception thrown when a circular reference is detected during class instantiation.
- */
-class InstantiateCircularReferenceException extends Exception
+class InstantiateCircularReferenceException extends DependencyInjectionException
 {
-    /**
-     * InstantiateCircularReferenceException constructor.
-     *
-     * @param string         $class     The class for which a circular reference was detected.
-     * @param string          $stack     The instantiation stack that caused the circular reference.
-     * @param int            $code      The error code (default: 0).
-     * @param Throwable|null $previous  The previous throwable used for chaining exceptions (default: null).
-     */
-    public function __construct(string $class, string $stack, int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $class, string $stack, ?Throwable $previous = null)
     {
-        parent::__construct("Circular reference detected during instantiation of the class $class. Instantiation stack: $stack.", $code, $previous);
+        parent::__construct("Circular reference detected during instantiation of the class $class. Instantiation stack: $stack.", $previous);
+        $this->code = 1504;
     }
 }

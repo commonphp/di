@@ -1,25 +1,28 @@
 <?php
 
+/**
+ * Represents an exception thrown when a method invocation fails.
+ *
+ * This exception is thrown to indicate that an attempt to invoke a method on a class instance failed during the
+ * dependency injection process, signaling invocation-related issues.
+ *
+ * @package CommonPHP
+ * @subpackage DependencyInjection\Exceptions
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
+ */
+
 namespace CommonPHP\DependencyInjection\Exceptions;
 
-use Exception;
 use Throwable;
 
-/**
- * Exception thrown when the invocation of a method fails.
- */
-class InvocationFailedException extends Exception
+class InvocationFailedException extends DependencyInjectionException
 {
-    /**
-     * InvocationFailedException constructor.
-     *
-     * @param string         $class     The class in which the method invocation failed.
-     * @param string         $method    The method that failed to be invoked.
-     * @param int            $code      The error code (default: 0).
-     * @param Throwable|null $previous  The previous throwable used for chaining exceptions (default: null).
-     */
-    public function __construct(string $class, string $method, int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $class, string $method, ?Throwable $previous = null)
     {
-        parent::__construct("Invocation of method $method in class $class failed.", $code, $previous);
+        parent::__construct("Invocation of method $method in class $class failed.", $previous);
+        $this->code = 1506;
     }
 }

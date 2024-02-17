@@ -1,25 +1,28 @@
 <?php
 
+/**
+ * Represents an exception thrown when a non-public method is invoked.
+ *
+ * This exception is used to signal an attempt to invoke a method that is not accessible due to its visibility, ensuring
+ * that only public methods are invoked in the dependency injection process.
+ *
+ * @package CommonPHP
+ * @subpackage DependencyInjection\Exceptions
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
+ */
+
 namespace CommonPHP\DependencyInjection\Exceptions;
 
-use Exception;
 use Throwable;
 
-/**
- * Exception thrown when attempting to invoke a non-public method.
- */
-class MethodNotPublicException extends Exception
+class MethodNotPublicException extends DependencyInjectionException
 {
-    /**
-     * MethodNotPublicException constructor.
-     *
-     * @param string         $class     The class in which the method is declared.
-     * @param string         $method    The non-public method that cannot be invoked.
-     * @param int            $code      The error code (default: 0).
-     * @param Throwable|null $previous  The previous throwable used for chaining exceptions (default: null).
-     */
-    public function __construct(string $class, string $method, int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $class, string $method, ?Throwable $previous = null)
     {
-        parent::__construct("The method $method in class $class is not public.", $code, $previous);
+        parent::__construct("The method $method in class $class is not public.", $previous);
+        $this->code = 1509;
     }
 }

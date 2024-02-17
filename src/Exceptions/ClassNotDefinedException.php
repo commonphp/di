@@ -1,24 +1,28 @@
 <?php
 
+/**
+ * Represents an exception thrown when a specified class is not defined.
+ *
+ * This exception indicates that the class intended for instantiation or usage within the dependency injection process
+ * does not exist, highlighting issues with class resolution.
+ *
+ * @package CommonPHP
+ * @subpackage DependencyInjection\Exceptions
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
+ */
+
 namespace CommonPHP\DependencyInjection\Exceptions;
 
-use Exception;
 use Throwable;
 
-/**
- * Exception thrown when a class is not defined.
- */
-class ClassNotDefinedException extends Exception
+class ClassNotDefinedException extends DependencyInjectionException
 {
-    /**
-     * ClassNotDefinedException constructor.
-     *
-     * @param string         $class     The class that is not defined.
-     * @param int            $code      The error code (default: 0).
-     * @param Throwable|null $previous  The previous throwable used for chaining exceptions (default: null).
-     */
-    public function __construct(string $class, int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $class, ?Throwable $previous = null)
     {
-        parent::__construct("The class $class is not defined.", $code, $previous);
+        parent::__construct("The class $class is not defined.", $previous);
+        $this->code = 1502;
     }
 }

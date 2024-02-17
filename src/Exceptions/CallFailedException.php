@@ -1,24 +1,28 @@
 <?php
 
+/**
+ * Represents an exception thrown when a function call fails during dependency injection.
+ *
+ * This exception is used specifically when a call to a function or method fails within the dependency injection process,
+ * indicating problems with invoking the desired functionality.
+ *
+ * @package CommonPHP
+ * @subpackage DependencyInjection\Exceptions
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
+ */
+
 namespace CommonPHP\DependencyInjection\Exceptions;
 
-use Exception;
 use Throwable;
 
-/**
- * Exception thrown when a call to a function fails.
- */
-class CallFailedException extends Exception
+class CallFailedException extends DependencyInjectionException
 {
-    /**
-     * CallFailedException constructor.
-     *
-     * @param string         $function  The function that failed to be called.
-     * @param int            $code      The error code (default: 0).
-     * @param Throwable|null $previous  The previous throwable used for chaining exceptions (default: null).
-     */
-    public function __construct(string $function, int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $function, ?Throwable $previous = null)
     {
-        parent::__construct("Call to function $function failed.", $code, $previous);
+        parent::__construct("Call to function $function failed.", $previous);
+        $this->code = 1501;
     }
 }

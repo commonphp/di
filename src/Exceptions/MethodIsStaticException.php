@@ -1,25 +1,28 @@
 <?php
 
+/**
+ * Represents an exception thrown when an attempt is made to non-statically invoke a static method.
+ *
+ * This exception indicates a misuse of a static method within the dependency injection process, particularly when an
+ * attempt is made to invoke it in a non-static context.
+ *
+ * @package CommonPHP
+ * @subpackage DependencyInjection\Exceptions
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
+ */
+
 namespace CommonPHP\DependencyInjection\Exceptions;
 
-use Exception;
 use Throwable;
 
-/**
- * Exception thrown when attempting to invoke a static method.
- */
-class MethodIsStaticException extends Exception
+class MethodIsStaticException extends DependencyInjectionException
 {
-    /**
-     * MethodIsStaticException constructor.
-     *
-     * @param string         $class     The class in which the method is declared.
-     * @param string         $method    The static method that cannot be invoked.
-     * @param int            $code      The error code (default: 0).
-     * @param Throwable|null $previous  The previous throwable used for chaining exceptions (default: null).
-     */
-    public function __construct(string $class, string $method, int $code = 0, ?Throwable $previous = null)
+    public function __construct(string $class, string $method, ?Throwable $previous = null)
     {
-        parent::__construct("The method $method in class $class is static.", $code, $previous);
+        parent::__construct("The method $method in class $class is static.", $previous);
+        $this->code = 1507;
     }
 }
