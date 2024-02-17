@@ -1,40 +1,39 @@
 <?php
 
+
 /**
- * This file contains the InstantiationStack class, which is a part of the
- * CommonPHP\DependencyInjection\Support namespace. It is responsible for
- * tracking the instantiation of classes during the process of dependency
- * injection, helping to identify and prevent circular dependencies.
+ * Manages a stack of class names to track the instantiation process during dependency injection.
  *
- * The InstantiationStack class provides a stack-based mechanism for keeping
- * track of which classes are currently being instantiated. This is essential for
- * detecting circular dependencies, which could otherwise lead to infinite loops or
- * other serious issues.
+ * This class provides a mechanism to track class instantiations in a stack-based approach,
+ * essential for detecting and preventing circular dependencies in the dependency injection process.
+ * Declared as final to maintain the integrity of the dependency injection system by preventing extension.
  *
- * This class is declared as final to prevent it from being extended, thus
- * ensuring the integrity of the dependency injection system.
- *
- * PHP version 8.1
- *
- * @package    CommonPHP
- * @subpackage DependencyInjection\Support
- * @author     Timothy McClatchey <timothy@commonphp.org>
- * @copyright  2023 CommonPHP.org
- * @license    http://opensource.org/licenses/MIT MIT License
+ * @package CommonPHP
+ * @subpackage DependencyInjection
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
  */
 
 namespace CommonPHP\DependencyInjection\Support;
 
 final class InstantiationStack
 {
-    /** @var class-string[] */
+    /**
+     * Stack of class names being instantiated.
+     *
+     * @var class-string[]
+     */
     private array $elements = [];
 
     /**
-     * Adds a class name to the stack. This should be called when the instantiation
-     * process for a class begins.
+     * Adds a class name to the instantiation stack.
      *
-     * @param class-string $className The class name to push.
+     * This method is invoked at the beginning of a class instantiation process,
+     * aiding in the detection of circular dependencies.
+     *
+     * @param class-string $className The name of the class being instantiated.
      */
     public function push(string $className): void
     {
@@ -42,8 +41,9 @@ final class InstantiationStack
     }
 
     /**
-     * Removes the most recent class name from the stack. This should be called
-     * when the instantiation process for a class completes.
+     * Removes the most recent class name from the instantiation stack.
+     *
+     * This method is invoked upon the completion of a class's instantiation process.
      */
     public function pop(): void
     {
@@ -51,14 +51,21 @@ final class InstantiationStack
     }
 
     /**
-     * @param class-string $className
-     * @return bool
+     * Checks if a class name exists in the instantiation stack.
+     *
+     * @param class-string $className The name of the class to check.
+     * @return bool True if the class name is in the stack, false otherwise.
      */
     public function has(string $className): bool
     {
         return in_array($className, $this->elements);
     }
 
+    /**
+     * Converts the instantiation stack to a string representation.
+     *
+     * @return string A comma-separated list of class names in the stack.
+     */
     public function toString(): string
     {
         return implode(', ', $this->elements);

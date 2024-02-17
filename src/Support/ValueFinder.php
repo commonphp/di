@@ -1,22 +1,15 @@
 <?php
 
 /**
- * This class is a part of the CommonPHP\DependencyInjection\Support namespace.
- * It acts as a support class for the dependency injection process, specifically
- * for finding and handling parameter values during instantiation.
+ * Supports the dependency injection process by managing the discovery and handling of parameter values
+ * during object instantiation, leveraging PHP's Reflection API for introspection.
  *
- * The ValueFinder class provides functionality to find and manage parameter values
- * required during the instantiation of classes. It leverages PHP's Reflection API
- * to discover parameters, supports callbacks for extensibility during lookup,
- * and handles a variety of edge cases to ensure robustness.
- *
- * PHP version 8.1
- *
- * @package    CommonPHP
- * @subpackage DependencyInjection\Support
- * @author     Timothy <timothy@commonphp.org>
- * @copyright  2023 CommonPHP.org
- * @license    http://opensource.org/licenses/MIT MIT License
+ * @package CommonPHP
+ * @subpackage DependencyInjection
+ * @author Timothy <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
  */
 
 namespace CommonPHP\DependencyInjection\Support;
@@ -32,18 +25,16 @@ use ReflectionUnionType;
 
 final class ValueFinder
 {
-    /** @var Closure[] */
+    /**
+     * @var Closure[] Array of lookup callbacks used for custom value resolution.
+     */
     private array $onLookupCallbacks = [];
 
     /**
-     * This hooks into the lookup callbacks when findValue(...) is called. Three parameters are sent
-     * to the callback:
-     *      - $name: The name of the value being looked for
-     *      - $typeName: The expected type or class-name of the value being looked for
-     *      - &$found: If the lookup finds the value, it must set this to true and return the value
-     * The return type is expected to be: mixed
+     * Registers a callback to be invoked during parameter value lookup, allowing for custom
+     * resolution logic.
      *
-     * @param callable|string $callback A list of callbacks
+     * @param callable|string $callback A callback or a string representing a function name.
      * @return void
      */
     public function onLookup(callable|string $callback): void
@@ -53,11 +44,14 @@ final class ValueFinder
     }
 
     /**
-     * @param string $name The parameter name
-     * @param ReflectionType $types The ReflectionType instance.
-     * @param array $passedParameters Parameters that were passed for the injection
-     * @param bool $found If the value was found or not
-     * @return mixed
+     * Attempts to find a value for a specified parameter, considering passed parameters and
+     * registered lookup callbacks.
+     *
+     * @param string $name The name of the parameter for which a value is being sought.
+     * @param ReflectionType $types The expected types of the parameter as a ReflectionType instance.
+     * @param array $passedParameters An associative array of parameters passed to the injector.
+     * @param bool &$found Reference flag indicating whether the value was found.
+     * @return mixed The resolved value for the parameter, or null if not found and null is allowed.
      * @throws UnsupportedReflectionTypeException
      */
     public function findValue(string $name, ReflectionType $types, array $passedParameters, bool &$found): mixed
@@ -113,9 +107,12 @@ final class ValueFinder
     }
 
     /**
-     * @param ReflectionFunction|ReflectionMethod $source The source ReflectionFunction or ReflectionMethod.
-     * @param array $passedParameters The parameters passed to the DI
-     * @return array
+     * Resolves the parameters needed for a given ReflectionFunction or ReflectionMethod, using both
+     * explicitly passed parameters and those resolved through registered lookup callbacks.
+     *
+     * @param ReflectionFunction|ReflectionMethod $source The reflection of the function or method being called.
+     * @param array $passedParameters An associative array of explicitly passed parameters.
+     * @return array An array of resolved parameters suitable for invoking the function or method.
      * @throws ParameterDiscoveryFailedException
      * @throws UnsupportedReflectionTypeException
      */

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Provides a dependency injection container to instantiate, invoke, call, and populate objects using PHP's Reflection API.
+ * This file provides the core functionality for dependency injection within the CommonPHP framework,
+ * leveraging PHP's Reflection API to dynamically manage object instantiation and method invocation.
  *
  * @package CommonPHP
  * @subpackage DependencyInjection
@@ -34,10 +35,15 @@ use Throwable;
 
 final class DependencyInjector
 {
-    public ValueFinder $valueFinder;
+    /** @var ValueFinder Provides mechanisms for discovering parameter values during object instantiation. */
     public readonly ValueFinder $valueFinder;
+
+    /** @var InstantiationStack Tracks the instantiation process to prevent circular references. */
     private InstantiationStack $instantiationStack;
 
+    /**
+     * Initializes the DependencyInjector with necessary support structures.
+     */
     public function __construct()
     {
         $this->instantiationStack = new InstantiationStack();
@@ -45,9 +51,11 @@ final class DependencyInjector
     }
 
     /**
+     * Instantiates a class with the given parameters, resolving dependencies automatically.
+     *
      * @template T
-     * @param class-string<T> $className The fully qualified class name to instantiate
-     * @param array $parameters The parameters to pass to the constructor
+     * @param class-string<T> $className The fully qualified class name to instantiate.
+     * @param array $parameters Parameters to pass to the constructor, if any.
      * @return T The instantiated object.
      * @throws ClassNotDefinedException
      * @throws ClassNotInstantiableException
@@ -97,11 +105,13 @@ final class DependencyInjector
     }
 
     /**
-     * @param object $object The object to invoke against
-     * @param string $methodName The name of the method
-     * @param array $parameters Defined parameters to send to the method
-     * @param bool $publicOnly Only allow public methods to be called
-     * @return mixed
+     * Invokes a method on the given object with specified parameters.
+     *
+     * @param object $object The object on which to invoke the method.
+     * @param string $methodName The method name to invoke.
+     * @param array $parameters Parameters to pass to the method.
+     * @param bool $publicOnly Whether to restrict invocation to public methods only.
+     * @return mixed The result of the method invocation.
      * @throws InvocationFailedException
      * @throws MethodIsStaticException
      * @throws MethodNotDefinedException
@@ -135,9 +145,11 @@ final class DependencyInjector
     }
 
     /**
-     * @param string|Closure $callable The function or closure to call
-     * @param array $parameters The parameters passed
-     * @return mixed
+     * Calls a function or closure with specified parameters.
+     *
+     * @param string|Closure $callable The function or closure to call.
+     * @param array $parameters Parameters to pass to the callable.
+     * @return mixed The result of the callable invocation.
      * @throws CallFailedException
      */
     public function call(string|Closure $callable, array $parameters = []): mixed
@@ -151,9 +163,11 @@ final class DependencyInjector
     }
 
     /**
-     * @param object $object The object to populate properties on
-     * @param array $values Array of values that contain any extra properties
-     * @param bool $publicOnly Flag to indicate if the only public properties are to be populated
+     * Populates the properties of an object with the given values.
+     *
+     * @param object $object The object to populate.
+     * @param array $values Key-value pairs for property assignments.
+     * @param bool $publicOnly Whether to restrict population to public properties only.
      * @throws UnsupportedReflectionTypeException
      */
     public function populate(object $object, array $values, bool $publicOnly = true): void
