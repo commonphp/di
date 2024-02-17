@@ -35,6 +35,7 @@ use Throwable;
 final class DependencyInjector
 {
     public ValueFinder $valueFinder;
+    public readonly ValueFinder $valueFinder;
     private InstantiationStack $instantiationStack;
 
     public function __construct()
