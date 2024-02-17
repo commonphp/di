@@ -1,20 +1,14 @@
 <?php
 
 /**
- * This class is a part of the CommonPHP\DependencyInjection namespace.
- * It provides a dependency injection container that is able to instantiate, invoke, call, and populate objects.
+ * Provides a dependency injection container to instantiate, invoke, call, and populate objects using PHP's Reflection API.
  *
- * The DependencyInjector class leverages PHP's Reflection API to analyse and manage dependencies. It supports
- * checks for circular references during instantiation and handles parameter values using the ValueFinder class.
- * It provides a flexible and robust dependency injection solution for your PHP projects.
- *
- * PHP version 8.1
- *
- * @package    CommonPHP
+ * @package CommonPHP
  * @subpackage DependencyInjection
- * @author     Timothy McClatchey <timothy@commonphp.org>
- * @copyright  2023 CommonPHP.org
- * @license    http://opensource.org/licenses/MIT MIT License
+ * @author Timothy McClatchey <timothy@commonphp.org>
+ * @copyright 2024 CommonPHP.org
+ * @license http://opensource.org/licenses/MIT MIT License
+ * @noinspection PhpUnused
  */
 
 namespace CommonPHP\DependencyInjection;
