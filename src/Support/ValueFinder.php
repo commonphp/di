@@ -16,6 +16,7 @@ namespace CommonPHP\DependencyInjection\Support;
 
 use Closure;
 use CommonPHP\DependencyInjection\Exceptions\ParameterDiscoveryFailedException;
+use CommonPHP\DependencyInjection\Exceptions\ParameterTypeRequiredException;
 use CommonPHP\DependencyInjection\Exceptions\UnsupportedReflectionTypeException;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -115,6 +116,7 @@ final class ValueFinder
      * @return array An array of resolved parameters suitable for invoking the function or method.
      * @throws ParameterDiscoveryFailedException
      * @throws UnsupportedReflectionTypeException
+     * @throws ParameterTypeRequiredException
      */
     public function findParameters(ReflectionFunction|ReflectionMethod $source, array $passedParameters): array
     {
@@ -126,6 +128,14 @@ final class ValueFinder
         foreach ($source->getParameters() as $parameter)
         {
             $found = false;
+            if ($parameter->getType() === null)
+            {
+                throw new ParameterTypeRequiredException(
+                    $source instanceof ReflectionMethod ? $source->getDeclaringClass()->getName() : '{main}',
+                    $source->getName(),
+                    $parameter->getName()
+                );
+            }
 
             // Try to find the value
             $newValue = $this->findValue($parameter->getName(), $parameter->getType(), $passedParameters, $found);
