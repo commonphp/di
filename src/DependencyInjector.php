@@ -159,24 +159,27 @@ final class DependencyInjector
     {
         // Create a reflection of the object.
         $class = new ReflectionClass($object);
+        while ($class !== false)
+        {
+            foreach ($class->getProperties() as $property) {
+                // Static properties are not supported. Also ignore properties that are not public, if the publicOnly
+                // value is set to true
+                if ($property->isStatic() || ($publicOnly && !$property->isPublic())) {
+                    continue;
+                }
 
-        foreach ($class->getProperties() as $property) {
-            // Static properties are not supported. Also ignore properties that are not public, if the publicOnly
-            // value is set to true
-            if ($property->isStatic() || ($publicOnly && !$property->isPublic())) {
-                continue;
-            }
+                // Ignore readonly properties that have already been set
+                if ($property->isReadOnly() && $property->isInitialized($object)) {
+                    continue;
+                }
 
-            // Ignore readonly properties that have already been set
-            if ($property->isReadOnly() && $property->isInitialized($object)) {
-                continue;
+                $found = false;
+                $value = $this->valueFinder->findValue($property->getName(), $property->getType(), $values, $found);
+                if ($found) {
+                    $property->setValue($object, $value);
+                }
             }
-
-            $found = false;
-            $value = $this->valueFinder->findValue($property->getName(), $property->getType(), $values, $found);
-            if ($found) {
-                $property->setValue($object, $value);
-            }
+            $class = $class->getParentClass();
         }
     }
 }
