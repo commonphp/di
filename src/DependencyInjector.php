@@ -145,7 +145,7 @@ final class DependencyInjector
             $function = new ReflectionFunction($callable);
             return $function->invokeArgs($this->valueFinder->findParameters($function, $parameters));
         } catch (Throwable $t) {
-            throw new CallFailedException(is_string($callable) ? 'callable' : '{Closure}', previous: $t);
+            throw new CallFailedException(is_string($callable) ? "callable '$callable'" : '{Closure}', previous: $t);
         }
     }
 
