@@ -1,6 +1,6 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use CommonPHP\DependencyInjection\DependencyInjector;
 use CommonPHP\DependencyInjection\Support\ValueFinder;
