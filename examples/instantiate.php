@@ -6,13 +6,18 @@ use CommonPHP\DependencyInjection\DependencyInjector;
 
 class ExampleClass
 {
-    public function __construct(private string $property)
+    public function __construct(private string $property, private string $defaultExample = 'defaultExample')
     {
     }
 
     public function getProperty(): string
     {
         return $this->property;
+    }
+
+    public function getDefaultExample(): string
+    {
+        return $this->defaultExample;
     }
 }
 
@@ -49,3 +54,4 @@ try {
 
 // Use the instantiated object
 echo $instance->getProperty();  // Outputs: exampleValue
+echo $instance->getDefaultExample();
