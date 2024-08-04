@@ -68,7 +68,6 @@ final class DependencyInjector
     public function delegate(string $className, callable $callback): void
     {
         $this->valueFinder->onLookup(function ($name, $typeName, &$found) use ($className, $callback) {
-            var_dump($typeName, $className);
             if ($typeName === $className) {
                 $found = true;
                 return $callback($this, $name, $typeName);
